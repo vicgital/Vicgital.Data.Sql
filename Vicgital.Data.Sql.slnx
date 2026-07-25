@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/deployment/">
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Vicgital.Data.Sql/Vicgital.Data.Sql.csproj" />
+  </Folder>
+  <Folder Name="/test/" />
+</Solution>
