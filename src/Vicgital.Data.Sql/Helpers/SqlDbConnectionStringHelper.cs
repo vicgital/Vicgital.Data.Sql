@@ -6,7 +6,6 @@
         {
             #region Validate
             ArgumentException.ThrowIfNullOrEmpty(server, nameof(server));
-            ArgumentException.ThrowIfNullOrEmpty(database, nameof(database));
             ArgumentException.ThrowIfNullOrEmpty(username, nameof(username));
             ArgumentException.ThrowIfNullOrEmpty(password, nameof(password));
             #endregion
