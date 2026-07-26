@@ -4,7 +4,7 @@
 	  <TargetFramework>net10.0</TargetFramework>
 	  <AssemblyName>Vicgital.Data.Sql</AssemblyName>
 	  <PackageId>Vicgital.Data.Sql</PackageId>
-	  <Version>1.0.0</Version>
+	  <Version>1.0.1</Version>
 	  <Authors>Vicgital</Authors>
 	  <RepositoryUrl>https://github.com/vicgital/Vicgital.Data.Sql</RepositoryUrl>
 	  <RepositoryType>git</RepositoryType>

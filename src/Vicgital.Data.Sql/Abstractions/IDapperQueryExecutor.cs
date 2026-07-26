@@ -30,6 +30,13 @@ public interface IDapperQueryExecutor
         int? commandTimeout = null,
         CancellationToken cancellationToken = default);
 
+    Task<T> QuerySingleAsync<T>(
+        string sql,
+        object? parameters = null,
+        CommandType commandType = CommandType.Text,
+        int? commandTimeout = null,
+        CancellationToken cancellationToken = default);
+
     Task<int> ExecuteAsync(
         string sql,
         object? parameters = null,

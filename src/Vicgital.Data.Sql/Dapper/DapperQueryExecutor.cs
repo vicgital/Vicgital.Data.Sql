@@ -40,6 +40,17 @@ public sealed class DapperQueryExecutor : IDapperQueryExecutor
         return await _unitOfWork.Connection.QueryFirstOrDefaultAsync<T>(command);
     }
 
+    public async Task<T> QuerySingleAsync<T>(
+        string sql,
+        object? parameters = null,
+        CommandType commandType = CommandType.Text,
+        int? commandTimeout = null,
+        CancellationToken cancellationToken = default)
+    {
+        var command = BuildCommand(sql, parameters, commandType, commandTimeout, cancellationToken);
+        return await _unitOfWork.Connection.QuerySingleAsync<T>(command);
+    }
+
     public async Task<T?> QuerySingleOrDefaultAsync<T>(
         string sql,
         object? parameters = null,
