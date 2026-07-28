@@ -3,8 +3,6 @@
     public enum Databases
     {
         IdentityServer,
-        Calendar,
-        Financial,
-        TimeManagement
+        LifeOS        
     }
 }
