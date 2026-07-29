@@ -9,7 +9,6 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    environment: Nuget_Publish
     permissions:
       packages: write
       contents: read

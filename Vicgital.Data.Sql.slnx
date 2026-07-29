@@ -2,9 +2,8 @@
   <Folder Name="/.deployment/">
     <File Path=".github/workflows/publish_package.yml" />
     <File Path="README.md" />
-  </Folder>
-  <Folder Name="/src/">
     <Project Path="src/Vicgital.Data.Sql/Vicgital.Data.Sql.csproj" />
   </Folder>
+  <Folder Name="/src/" />
   <Folder Name="/test/" />
 </Solution>
