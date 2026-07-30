@@ -19,7 +19,7 @@ and transaction-coordination code isn't reimplemented per service.
 ## Install
 
 Packages restore from both `nuget.org` and Vicgital's GitHub Packages feed (see `nuget.config`).
-For the GitHub source, set the `GIT_PACKAGES_READ_ONLY_PAT` environment variable to a PAT with
+For the GitHub source, set the `GH_PACKAGE_TOKEN` environment variable to a PAT with
 `read:packages` scope.
 
 ```xml
