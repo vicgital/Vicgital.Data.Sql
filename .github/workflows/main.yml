@@ -1,5 +1,6 @@
 name: Vicgital.Data.Sql
 
+
 on:
   push:
     branches: [ "main" ]
@@ -7,6 +8,8 @@ on:
     branches: [ "main" ]
 
 env:
+  GH_PACKAGE_USERNAME: ${{ secrets.GH_PACKAGE_USERNAME }}
+  GH_PACKAGE_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
   startupProject: "src/Vicgital.Data.Sql/Vicgital.Data.Sql.csproj"
 
 jobs:
@@ -22,5 +25,3 @@ jobs:
         with:
           startupProject: ${{ env.startupProject }}
           githubPublishPackageToken: ${{ secrets.GITHUB_TOKEN }}
-          githubPackageUsername: ${{ secrets.GH_PACKAGE_USERNAME }}
-          githubPackageToken: ${{ secrets.GH_PACKAGE_TOKEN }}
