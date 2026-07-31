@@ -10,7 +10,6 @@ on:
 env:
   GH_PACKAGE_USERNAME: ${{ secrets.GH_PACKAGE_USERNAME }}
   GH_PACKAGE_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
-  startupProject: "src/Vicgital.Data.Sql/Vicgital.Data.Sql.csproj"
 
 jobs:
   publish:
@@ -18,10 +17,16 @@ jobs:
     permissions:
       packages: write
       contents: read
+    strategy:
+      matrix:
+        startupProject:
+          - "src/Vicgital.Data.Sql/Vicgital.Data.Sql.csproj"
+          - "src/Vicgital.Data.Sql.Dapper/Vicgital.Data.Sql.Dapper.csproj"
+          - "src/Vicgital.Data.Sql.EF/Vicgital.Data.Sql.EF.csproj"
     steps:
 
       - name: Publish Nuget Package
         uses: vicgital/cicd/actions/dotnetNugetPublish@main
         with:
-          startupProject: ${{ env.startupProject }}
+          startupProject: ${{ matrix.startupProject }}
           githubPublishPackageToken: ${{ secrets.GITHUB_TOKEN }}

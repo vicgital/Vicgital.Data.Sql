@@ -2,8 +2,11 @@
   <Folder Name="/.deployment/">
     <File Path=".github/workflows/main.yml" />
     <File Path="README.md" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Vicgital.Data.Sql.Dapper/Vicgital.Data.Sql.Dapper.csproj" />
+    <Project Path="src/Vicgital.Data.Sql.EF/Vicgital.Data.Sql.EF.csproj" />
     <Project Path="src/Vicgital.Data.Sql/Vicgital.Data.Sql.csproj" />
   </Folder>
-  <Folder Name="/src/" />
   <Folder Name="/test/" />
 </Solution>

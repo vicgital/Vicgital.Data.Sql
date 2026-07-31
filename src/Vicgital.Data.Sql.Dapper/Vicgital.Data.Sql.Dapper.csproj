@@ -1,0 +1,26 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net10.0</TargetFramework>
+	  <AssemblyName>Vicgital.Data.Sql.Dapper</AssemblyName>
+	  <PackageId>Vicgital.Data.Sql.Dapper</PackageId>
+	  <Version>2.0.0</Version>
+	  <Authors>Vicgital</Authors>
+	  <RepositoryUrl>https://github.com/vicgital/Vicgital.Data.Sql</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <PackageDescription>Dapper-backed SQL data access for Vicgital services. No EF Core dependency, for services that don't need it.</PackageDescription>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Dapper" Version="2.1.79" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\Vicgital.Data.Sql\Vicgital.Data.Sql.csproj" />
+  </ItemGroup>
+
+</Project>

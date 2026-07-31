@@ -1,8 +1,23 @@
 # Vicgital.Data.Sql
 
-Shared .NET library for SQL Server data access, built on Entity Framework Core and Dapper.
+Shared .NET libraries for SQL Server data access, built on Entity Framework Core and/or Dapper.
 Consumed by the infrastructure layer of Vicgital's gRPC services so repository, unit-of-work,
 and transaction-coordination code isn't reimplemented per service.
+
+The library ships as three packages so a service only pulls in the ORM it actually uses -
+a Dapper-only service never drags in EF Core's (much larger) dependency tree, which keeps
+container images smaller.
+
+| Package | Contents | Depends on |
+|---|---|---|
+| `Vicgital.Data.Sql` | `IRepository<,>`, `IUnitOfWork`, `IDapperQueryExecutor`, `IDbConnectionFactory`, `SqlConnectionFactory`, `AdoUnitOfWork` | `Microsoft.Data.SqlClient` |
+| `Vicgital.Data.Sql.Dapper` | `DapperQueryExecutor`, `AddVicgitalDataSqlDapper` | `Vicgital.Data.Sql`, `Dapper` |
+| `Vicgital.Data.Sql.EF` | `Repository<,>`, `UnitOfWork<TContext>`, `AddVicgitalDataSql<TContext>` | `Vicgital.Data.Sql`, `Vicgital.Data.Sql.Dapper`, `Microsoft.EntityFrameworkCore(.SqlServer)` |
+
+`Vicgital.Data.Sql.EF` depends on `Vicgital.Data.Sql.Dapper` to keep the "Dapper as an escape
+hatch" feature below - that's a single small package, so it doesn't meaningfully add to image
+size. `Vicgital.Data.Sql.Dapper` never depends on EF Core, so Dapper-only services avoid it
+entirely.
 
 ## Design
 
@@ -22,8 +37,14 @@ Packages restore from both `nuget.org` and Vicgital's GitHub Packages feed (see 
 For the GitHub source, set the `GH_PACKAGE_TOKEN` environment variable to a PAT with
 `read:packages` scope.
 
+Pick the package(s) that match how the consuming service talks to SQL Server:
+
 ```xml
-<PackageReference Include="Vicgital.Data.Sql" Version="1.0.0" />
+<!-- EF Core (pulls in Vicgital.Data.Sql and Vicgital.Data.Sql.Dapper transitively) -->
+<PackageReference Include="Vicgital.Data.Sql.EF" Version="2.0.0" />
+
+<!-- Dapper only, no EF Core -->
+<PackageReference Include="Vicgital.Data.Sql.Dapper" Version="2.0.0" />
 ```
 
 ## Usage
@@ -149,13 +170,20 @@ calls atomically, the same way as the EF Core mode.
 ## Project layout
 
 ```
-src/Vicgital.Data.Sql/
-  Abstractions/          IRepository, IUnitOfWork, IDapperQueryExecutor, IDbConnectionFactory
-  EntityFrameworkCore/    Repository<TEntity,TKey>, UnitOfWork<TContext>
-  Dapper/                 DapperQueryExecutor
-  Ado/                    AdoUnitOfWork (EF-free unit of work)
-  Connections/            SqlConnectionFactory
-  Extensions/             AddVicgitalDataSql<TContext>, AddVicgitalDataSqlDapper
+src/Vicgital.Data.Sql/          (core - ORM-agnostic abstractions)
+  Abstractions/                 IRepository, IUnitOfWork, IDapperQueryExecutor, IDbConnectionFactory
+  Ado/                          AdoUnitOfWork (EF-free unit of work)
+  Connections/                  SqlConnectionFactory
+  Enums/, Helpers/              Databases, SqlDbConnectionStringHelper
+
+src/Vicgital.Data.Sql.Dapper/   (Dapper implementation, no EF Core dependency)
+  DapperQueryExecutor.cs
+  Extensions/                   AddVicgitalDataSqlDapper
+
+src/Vicgital.Data.Sql.EF/       (EF Core implementation)
+  Repository.cs                 Repository<TEntity,TKey>
+  UnitOfWork.cs                 UnitOfWork<TContext>
+  Extensions/                   AddVicgitalDataSql<TContext>
 ```
 
 ## Requirements
